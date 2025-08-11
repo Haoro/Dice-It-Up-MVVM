@@ -88,7 +88,7 @@ struct GroupsView: View {
                     )
                 )
             }
-            .navigationTitle("Players")
+            .navigationTitle("Groups")
             .navigationDestination(item: $groupsViewModel.selectedGroup) { group in
                 PlayersView(playerViewModel: PlayersViewModel(group: group))
             }

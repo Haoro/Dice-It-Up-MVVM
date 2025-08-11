@@ -27,22 +27,41 @@ struct DiceLogMapper {
                     // If essential fields are missing, skip this roll
                     return nil
                 }
+                
+                let resultAsInt: Int
+                if let intValue = Int(result) {
+                    resultAsInt = intValue
+                } else {
+                    resultAsInt = 0
+                }
+                
                 // Create DiceRoll instance from raw log data
                 return DiceRoll(
                     input: input,
-                    result: result,
+                    result: resultAsInt,
                     comment: log.comment,
                     timestamp: timestamp
                 )
             }
             
+            // Count all dice rolls.
+            let rollsCount = computeRollsCount(from: diceRolls)
+            
             // Create and return Player with all rolls
             return Player(
-                id: UUID(), // You could improve this by hashing playerName for stable IDs
+                id: UUID(),
                 name: playerName,
                 rolls: diceRolls,
-                titles: []
+                rollsCount: rollsCount
             )
         }
+    }
+    
+    static func computeRollsCount(from rolls: [DiceRoll]) -> [Int: Int] {
+        var counts: [Int: Int] = [:]
+        for roll in rolls {
+            counts[roll.result, default: 0] += 1
+        }
+        return counts
     }
 }

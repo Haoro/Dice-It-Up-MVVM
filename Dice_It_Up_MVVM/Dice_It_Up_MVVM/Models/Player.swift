@@ -7,9 +7,10 @@
 
 import Foundation
 
-struct Player: Equatable, Identifiable {
+struct Player: Equatable, Identifiable, Hashable {
     let id: UUID
     let name: String
     var rolls: [DiceRoll]
-    var titles: [Title]
+    let rollsCount: [Int: Int] // rollValue -> number of times rolled
+    var earnedTitles: [Title] = []
 }

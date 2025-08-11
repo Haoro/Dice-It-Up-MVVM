@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct DiceRoll: Equatable, Identifiable {
+struct DiceRoll: Equatable, Identifiable, Hashable {
     let id: UUID = UUID()
     let input: String
-    let result: String
+    let result: Int
     let comment: String?
     let timestamp: Int
     /// Retourne la date "de session" en considérant que les jets faits entre minuit et 6h sont du jour précédent.

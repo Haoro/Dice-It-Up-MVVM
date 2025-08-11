@@ -24,6 +24,9 @@ class PlayersViewModel: ObservableObject {
     // Optional error message to display to the user
     @Published var errorMessage: String? = nil
     
+    /// The player we want to see the details .
+    @Published var selectedPlayer: Player? = nil // Navigation trigger
+    
     // Service injected to fetch dice logs (allows easy mocking/testing)
     private let service: DiceLogServiceProtocol
     
@@ -43,9 +46,6 @@ class PlayersViewModel: ObservableObject {
     // MARK: - Public Methods
     func loadMockPlayers() {
         self.players = [
-            Player(id: UUID(), name: "Jora", rolls: [], titles: []),
-            Player(id: UUID(), name: "Nikolai", rolls: [], titles: []),
-            Player(id: UUID(), name: "Louis", rolls: [], titles: []),
         ]
     }
     
@@ -63,6 +63,8 @@ class PlayersViewModel: ObservableObject {
             
             // Transform raw logs into players with rolls using Mapper
             let groupedPlayers = DiceLogMapper.groupRollsByPlayer(from: diceLogs)
+            
+            let titledPlayers = Title.assignTitles(to: groupedPlayers)
             
             // Update published property to refresh UI
             players = groupedPlayers

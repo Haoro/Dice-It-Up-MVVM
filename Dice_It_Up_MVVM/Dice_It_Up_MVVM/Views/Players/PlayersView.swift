@@ -21,22 +21,21 @@ struct PlayersView: View {
             
             List {
                 ForEach(playerViewModel.players) { player in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(player.name)
-                                .font(.system(size: 25, weight: .bold))
-                                .lineLimit(1)
+                    Button(action: {
+                        playerViewModel.selectedPlayer = player
+                    }) {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(player.name)
+                                    .font(.system(size: 25, weight: .bold))
+                                    .lineLimit(1)
+                            }
+                            Spacer()
                         }
-                        Spacer()
-                    }
-                    .padding()
-                    .padding(.horizontal)
-                    .padding(.vertical, 4) // Space between cells
-                    .contentShape(Rectangle()) // Rend toute la cellule cliquable
-                    .onTapGesture {
-                        // Action principale : ouvrir détails
-                        print("Tap on \(player.name)")
-                        // TODO: Navigate to see the player's details.
+                        .padding()
+                        .padding(.horizontal)
+                        .padding(.vertical, 4) // Space between cells
+                        .contentShape(Rectangle()) // Rend toute la cellule cliquable
                     }
                 }
                 .listRowSeparator(.hidden)
@@ -49,14 +48,15 @@ struct PlayersView: View {
         .task {
             await playerViewModel.fetchData()
         }
+        .navigationTitle("Players")
+        .navigationDestination(item: $playerViewModel.selectedPlayer) { player in
+            PlayerDetailView(playerDetailViewModel: PlayerDetailViewModel(player: player))
+        }
     }
 }
 
 #Preview {
-    PlayersView(playerViewModel:
-                    PlayersViewModel(group:
-                                        Group(name: "Groupe 1",
-                                              urlPart: "ayana_groupe_1")
-                                    )
+    PlayersView(playerViewModel:PlayersViewModel(
+        group:Group(name: "Groupe 1", urlPart: "ayana_groupe_1"))
     )
 }
