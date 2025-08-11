@@ -30,31 +30,31 @@ struct GroupsView: View {
                     .font(.title)
                 
                 List {
-                    // Loop through all groups in the state
                     ForEach(groupsViewModel.groups) { group in
-                        
-                        // Each group is clickable
-                        Button(action: {
-                            // TODO: Send the `selectGroup` action with the group's ID or navigate to details
-                        }) {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(group.name)
-                                        .font(.system(size: 25, weight: .bold))
-                                        .lineLimit(1)
-                                    Text(group.urlPart)
-                                        .font(.system(size: 20))
-                                        .lineLimit(1)
-                                        .foregroundColor(.gray)
-                                }
-                                Spacer()
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(group.name)
+                                    .font(.system(size: 25, weight: .bold))
+                                    .lineLimit(1)
+                                Text(group.urlPart)
+                                    .font(.system(size: 20))
+                                    .lineLimit(1)
+                                    .foregroundColor(.gray)
                             }
-                            .padding()
-                            .padding(.horizontal)
-                            .padding(.vertical, 4) // Space between cell
+                            Spacer()
                         }
-                        .onLongPressGesture {
-                            groupToEdit = group // Set group to edit on long press
+                        .padding()
+                        .padding(.horizontal)
+                        .padding(.vertical, 4) // Space between cells
+                        .contentShape(Rectangle()) // Rend toute la cellule cliquable
+                        .onTapGesture {
+                            // Action principale : ouvrir détails
+                            print("Tap on \(group.name)")
+                            // TODO: Naviguer vers la vue détail du groupe
+                        }
+                        .onLongPressGesture(minimumDuration: 0.2) {
+                            // Action secondaire : ouvrir en mode édition
+                            groupToEdit = group
                             isShowingEditGroupSheet = true
                         }
                     }
@@ -72,6 +72,7 @@ struct GroupsView: View {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
                             // Show the sheet for adding a group
+                            groupToEdit = nil
                             isShowingEditGroupSheet = true
                         } label: {
                             Image(systemName: "plus")
@@ -82,7 +83,7 @@ struct GroupsView: View {
                 .sheet(isPresented: $isShowingEditGroupSheet) {
                     EditGroupView(
                         viewModel: EditGroupViewModel(
-                            group: nil, // nil = adding new group
+                            group: groupToEdit, // nil = adding new group
                             groupsViewModel: groupsViewModel
                         )
                     )
