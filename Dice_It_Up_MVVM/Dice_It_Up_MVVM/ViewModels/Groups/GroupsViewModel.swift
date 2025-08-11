@@ -12,10 +12,9 @@ class GroupsViewModel: ObservableObject {
     // MARK: - Published Properties
     // Group list displayed on the view.
     @Published var groups: [Group] = []
-    // État de chargement (pour afficher un indicateur dans la vue)
-    // Erreur éventuelle (en cas d'échec de chargement)
     
-    
+    /// The group we want to see the details .
+    @Published var selectedGroup: Group? = nil // Navigation trigger
     
     // MARK: - Init
     /// Init ViewModel (local or mock loading)
@@ -23,13 +22,12 @@ class GroupsViewModel: ObservableObject {
         loadMockGroups()
     }
     
-    
     // MARK: - Public Methods
     /// Load mock groups (depuis une source locale ou persistée)
     func loadMockGroups() {
         groups = [
-            Group(id: UUID(), name: "Groupe 1", urlPart: "ayana_groupe_1"),
-            Group(id: UUID(), name: "Groupe 2", urlPart: "ayana_groupe_2"),
+            Group(name: "Groupe 1", urlPart: "ayana_groupe_1"),
+            Group(name: "Groupe 2", urlPart: "ayana_groupe_2"),
         ]
     }
     /// Add a new group.

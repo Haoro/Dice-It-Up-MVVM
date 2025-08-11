@@ -51,7 +51,7 @@ struct EditGroupView: View {
 #Preview {
     EditGroupView(
         viewModel: EditGroupViewModel(
-            group: Group(id: UUID(), name: "Preview Group", urlPart: "preview"),
+            group: Group(name: "Preview Group", urlPart: "preview"),
             groupsViewModel: GroupsViewModel()
         )
     )

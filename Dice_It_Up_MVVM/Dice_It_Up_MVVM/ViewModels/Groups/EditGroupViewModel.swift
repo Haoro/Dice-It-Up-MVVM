@@ -50,7 +50,7 @@ class EditGroupViewModel: ObservableObject {
             groupsViewModel.updateGroup(group)
         } else {
             // Add new group
-            let newGroup = Group(id: UUID(), name: inputName, urlPart: inputUrlPart)
+            let newGroup = Group(name: inputName, urlPart: inputUrlPart)
             groupsViewModel.addGroup(newGroup)
         }
     }

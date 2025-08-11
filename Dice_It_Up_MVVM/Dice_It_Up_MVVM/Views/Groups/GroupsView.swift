@@ -23,7 +23,7 @@ struct GroupsView: View {
     // MARK: - Body
     var body: some View {
         
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 16) { // Vertical stack with 16 pts spacing
                 // Main title of the view
                 Text("Select a group")
@@ -49,8 +49,7 @@ struct GroupsView: View {
                         .contentShape(Rectangle()) // Rend toute la cellule cliquable
                         .onTapGesture {
                             // Action principale : ouvrir détails
-                            print("Tap on \(group.name)")
-                            // TODO: Naviguer vers la vue détail du groupe
+                            groupsViewModel.selectedGroup = group
                         }
                         .onLongPressGesture(minimumDuration: 0.2) {
                             // Action secondaire : ouvrir en mode édition
@@ -68,29 +67,31 @@ struct GroupsView: View {
                     .shadow(color: Color.black.opacity(0.05), radius: 1, x: 0, y: 1)
                 }
                 .scrollContentBackground(.hidden)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button {
-                            // Show the sheet for adding a group
-                            groupToEdit = nil
-                            isShowingEditGroupSheet = true
-                        } label: {
-                            Image(systemName: "plus")
-                        }
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        // Show the sheet for adding a group
+                        groupToEdit = nil
+                        isShowingEditGroupSheet = true
+                    } label: {
+                        Image(systemName: "plus")
                     }
                 }
-                // Sheet presentation for adding a new group
-                .sheet(isPresented: $isShowingEditGroupSheet) {
-                    EditGroupView(
-                        viewModel: EditGroupViewModel(
-                            group: groupToEdit, // nil = adding new group
-                            groupsViewModel: groupsViewModel
-                        )
-                    )
-                }
             }
-            
-            
+            // Sheet presentation for adding a new group
+            .sheet(isPresented: $isShowingEditGroupSheet) {
+                EditGroupView(
+                    viewModel: EditGroupViewModel(
+                        group: groupToEdit, // nil = adding new group
+                        groupsViewModel: groupsViewModel
+                    )
+                )
+            }
+            .navigationTitle("Players")
+            .navigationDestination(item: $groupsViewModel.selectedGroup) { group in
+                PlayersView(playerViewModel: PlayersViewModel(group: group))
+            }
         }
     }
 }

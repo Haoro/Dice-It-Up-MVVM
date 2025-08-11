@@ -8,9 +8,9 @@
 import Foundation
 
 // A group represents one group of player the dm is playing with.
-struct Group : Identifiable, Equatable {
+struct Group : Identifiable, Hashable {
     // Unique id used to avoid confusion while handling lists.
-    let id : UUID
+    let id : UUID = UUID()
     // The group's name.
     var name : String
     // The group url's last part
