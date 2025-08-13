@@ -39,7 +39,6 @@ extension Title {
             
             // Find players who have the maxCount
             let winners = playerScores.filter { $0.value == maxCount }.map { $0.key }
-            print(winners, title.name, title.rollValues)
             
             // If only one winner, assign the title
             if winners.count == 1, let winnerIndex = updatedPlayers.firstIndex(where: { $0.name == winners.first }) {

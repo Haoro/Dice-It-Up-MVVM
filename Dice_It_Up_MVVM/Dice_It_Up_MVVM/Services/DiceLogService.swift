@@ -39,7 +39,7 @@ struct DiceLogService: DiceLogServiceProtocol {
 //        guard let url = URL(string: "https://jsonplaceholder.typicode.com/todos/1") else {
 //            throw URLError(.badURL)
 //        }
-        guard let url = URL(string: "https://rolz.org/api/roomlog?room=ayana_groupe_1") else {
+        guard let url = URL(string: "https://rolz.org/api/roomlog?room=\(group)") else {
             throw URLError(.badURL)
         }
         

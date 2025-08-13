@@ -67,7 +67,7 @@ class PlayersViewModel: ObservableObject {
             let titledPlayers = Title.assignTitles(to: groupedPlayers)
             
             // Update published property to refresh UI
-            players = groupedPlayers
+            players = titledPlayers
             
         } catch {
             // Capture and publish any error encountered
