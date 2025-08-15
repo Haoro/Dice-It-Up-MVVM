@@ -11,8 +11,11 @@ import Foundation
 /// Chaque titre concerne un ou plusieurs résultats de dés possibles et ne peut-être attribué qu’à un seul player à chaque début de session.
 struct Title: Identifiable, Equatable, Hashable {
     let id = UUID()
+    /// The title's name.
     let name: String
+    /// The roll(s) needed to unlock the title.
     let rollValues: [Int]
+    /// Describe when and how to play the title.
     let description: String
 }
 
@@ -77,16 +80,16 @@ extension Title {
         rollValues: [19,28,37,46,55,64,73,82,91],
         description: "Lors d’un critique, le joueur peut décider de le renforcer pour amplifier l’effet du critique."
     )
-    static let dualWielder = Title(
+    static let copyCat = Title(
         name: "Dual Wielder",
         rollValues: [11,22,33,44,55,66,77,88,99],
-        description: "Permet de coordonner deux personnages pour réussir automatiquement deux actions faites simultanément (de façon normal, donc moins d’efficacité que si fait “normalement” et avec un succès critique)."
+        description: "Permet au joueur de ne pas lancer de dés et de recopier le dernier jet de dés effectué à la place."
     )
 
     static let all: [Title] = [
         .numberOne, .jackpotMaster, .captainUnlucky, .tarotProphet,
         .expeditionLeader, .universeEngineer, .middleMan, .devilDealer,
         .seductionEmperor, .atlansFollower, .lifeCoach, .tenseChampion,
-        .dualWielder
+        .copyCat
     ]
 }

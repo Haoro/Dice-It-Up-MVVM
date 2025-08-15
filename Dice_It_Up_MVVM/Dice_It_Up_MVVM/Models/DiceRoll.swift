@@ -9,11 +9,16 @@ import Foundation
 
 struct DiceRoll: Equatable, Identifiable, Hashable {
     let id: UUID = UUID()
+    /// What the player prompted.
     let input: String
+    /// The roll's result.
     let result: Int
+    /// Which action the roll was for ?
     let comment: String?
+    /// The precise time of the roll.
     let timestamp: Int
-    /// Retourne la date "de session" en considérant que les jets faits entre minuit et 6h sont du jour précédent.
+    /// The session's date.
+    /// Note that rolls are considered from the previous day when made from midnight till 6 hours later.
     var sessionDate: Date {
         let originalDate = Date(timeIntervalSince1970: TimeInterval(timestamp))
         return Calendar.current.date(byAdding: .hour, value: -6, to: originalDate)!

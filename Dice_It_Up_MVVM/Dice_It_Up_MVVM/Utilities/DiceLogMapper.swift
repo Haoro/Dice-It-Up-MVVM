@@ -47,9 +47,8 @@ struct DiceLogMapper {
             // Count all dice rolls.
             let rollsCount = computeRollsCount(from: diceRolls)
             
-            // Create and return Player with all rolls
+            // Create and return Player with all rolls.
             return Player(
-                id: UUID(),
                 name: playerName,
                 rolls: diceRolls,
                 rollsCount: rollsCount
