@@ -28,5 +28,18 @@ struct Player: Equatable, Identifiable, Hashable {
         self.rolls = rolls
         self.rollsCount = rollsCount
         self.earnedTitles = earnedTitles
+        self.sessions = Player.groupRollsIntoSessions(rolls)
     }
+    
+    ///
+    private static func groupRollsIntoSessions(_ rolls: [DiceRoll]) -> [Session] {
+            let grouped = Dictionary(grouping: rolls) { roll in
+                Calendar.current.startOfDay(for: roll.sessionDate) // group by day
+            }
+            
+            return grouped.map { date, rolls in
+                Session(date: date, rolls: rolls)
+            }
+            .sorted { $0.date > $1.date }
+        }
 }
